@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 numpy = "*"
 pydicom = "*"
+jupyter = "*"
+notebook = "*"
+ipython = "*"
 
 [dev-packages]
 

@@ -28,3 +28,8 @@ Weekly meeting with Cuccu, and in HFR, maternal, 30min weekly meeting (on Thursd
 * Lists (todo list (prioritization) and wish list (becoming a researcher)) (markdown), ATOM or sublime text
 
 **Meeting every Thursday between 13:00pm – 13:30pm**
+
+# 26 August 2021
+We speak a little bit about the first version of the renamer.py. Mr. Cuccu tell me that I needed to learn some useful shortcuts for ATOM, place the comments in the code in the line above, try to learn the English keyboard.
+
+I need also to read again my notes about the technical stuff for the thesis, that means the medical stuff, in link with the MRI, prostate, DICOM, and the related libraries in Python. I need also to install a jupyter notebook, it is easier to see the things (like dicoms).

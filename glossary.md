@@ -24,8 +24,8 @@ The CT scan is a medical imaging using X-rays. It can see hard tissues (like bon
 ## DICOM (Digital Imaging and Communications in Medicine)
 Format/extension for MRI, containing images and metadata (patient ID, bits per channel, ...)
 
-## PAX
-System in the HFR where we can see the images, make the diagnosis, see the patients, etc...
+## PACS (Picture archiving and communication system)
+System (in the HFR) where we can see the images, make the diagnosis, see the patients, etc...
 
 ## Gleason score
 Score to grade/classify a prostate cancer according to aggression, by looking the cells under a miscroscope after a biopsy. Goes from 6 (lowest grade cancer) to 10. Cells in prostate are classified in 5 patterns. After a biopsy, the pathologist assign a first grade (from 1 to 5, but pathologists rarely put 1 or 2) to the most predominant pattern, and a second grade to the second most dominant pattern. A score can be for example 3+4 (=7). \

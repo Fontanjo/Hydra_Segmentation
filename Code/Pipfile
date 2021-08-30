@@ -9,6 +9,7 @@ pydicom = "*"
 jupyter = "*"
 notebook = "*"
 ipython = "*"
+matplotlib = "*"
 
 [dev-packages]
 

@@ -15,7 +15,7 @@ The MRI helps to make/locate for a better biopsy.
 Biopsy is harder with prosthesis.
 
 ## Cancer detection and further steps
-To detect cancer, first we make a blood test (PSA test). Then we send the patient to an MRI. If the PIRADS score is high, we make a biopsy (and not prostatectomy), MRI helps to locate the likely tumor, and ultrasound (like for echography) is used to guide the needle.
+To detect cancer, first we make a blood test (PSA test). Then we send the patient to an MRI. If the PIRADS score is high, we make a biopsy (and not prostatectomy), MRI helps to locate the likely tumor, and ultrasound (like for echography) is used to guide the needle used for the biopsy.
 
 ## TODO:
 - Install a software to read DICOM

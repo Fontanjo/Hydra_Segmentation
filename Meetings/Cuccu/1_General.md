@@ -33,3 +33,6 @@ Weekly meeting with Cuccu, and in HFR, maternal, 30min weekly meeting (on Thursd
 We speak a little bit about the first version of the renamer.py. Mr. Cuccu tell me that I needed to learn some useful shortcuts for ATOM, place the comments in the code in the line above, try to learn the English keyboard.
 
 I need also to read again my notes about the technical stuff for the thesis, that means the medical stuff, in link with the MRI, prostate, DICOM, and the related libraries in Python. I need also to install a jupyter notebook, it is easier to see the things (like dicoms).
+
+# 2 September 2021
+Today I show Mr. Cuccu my jupyter notebook, and what can Pydicom do in general.

@@ -68,7 +68,7 @@ Goal : produce results and compare with publications
 - Search cancer imaging archive (how to find papers, how to download the datasets)
 - Find dataset that has segmentation (possibly)
 - Download dataset, run the script to preprocess data, and find the same preprocessed data as in the hydra work
-- See the three proposition (not sequentially)
+- See the three propositions (not sequentially)
 - Send an email if needed
 - Find the code for hydra
 

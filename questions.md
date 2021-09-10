@@ -10,3 +10,5 @@ Using for example pipenv install os
 
 ## Is there a way to handle path using python (instead of "hardcode") ?
 Yes, using path class of os module
+
+## What is the voxel spacing ?

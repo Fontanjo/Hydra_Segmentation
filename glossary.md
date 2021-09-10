@@ -7,11 +7,16 @@ Medical test, extracting of samples cells  or tissues to determine the presence 
 The MRI is a medical imaging using strong magnetic fields. When atoms are excited/perturbed with a magnetic field, and thet emit an electromagnetic signal with a frequency characteristic of the magnetic field at the nucleus.
 A **sequence** is a particular setting of pulse sequences and pulsed field fradients, resulting in a particula image appearance. Examples of different sequences:
 
-- **T2 weighted**, T2 is the spin–spin relaxation time (the time it takes for the magnetic resonance signal to irreversibly decay to 37%). After being excited, atoms tends to relax, and the differences in the decay are captured. The image is built on these differences.
-- **DWI (diffusion weighted images)**, measures the random Brownian motion of the water molecules within the tissues
-- **ADC (apparent diffusion coefficient)**, is the same as a DWI image, but it has dropped the T2 weighted
+- **T2 weighted**, T2 is the spin–spin relaxation time (the time it takes for the magnetic resonance signal to irreversibly decay to 37%). After being excited, atoms tends to relax, and the differences in the decay are captured. The image is built on these differences, tumor appears in white.
+- **DWI (diffusion weighted images)**, measures the random Brownian motion of the water molecules within the tissues, tumor appears in white. DWI is caracterized by its **b-value** (The b-value is a factor that reflects the strength and timing of the gradients used to generate diffusion-weighted images. The higher the b-value, the stronger the diffusion effects).
+- **ADC (apparent diffusion coefficient)**, is the same as a DWI image, but it has dropped the T2 weighted, tumor appears in black.
 
 MRI can only see soft tissues, but not hard ones.
+
+## Tumors and cancer
+A tumor is an abnormal mass of tissue that forms when cells grow and divide more than they should or do not die when they should. (https://www.cancer.gov/publications/dictionaries/cancer-terms/def/tumor).
+Cancerous tumors spread into, or invade, nearby tissues and can travel to distant places in the body to form new tumors. (https://www.cancer.gov/about-cancer/understanding/what-is-cancer).
+Tumors for the brain and the prostate have well defined boudaries. Tumors for lung has a shape of a spider web, with a central nodule.
 
 ## CT (computerized tomography) scans, (tomodensitométrie)
 The CT scan is a medical imaging using X-rays. It can see hard tissues (like bones).
@@ -19,7 +24,7 @@ The CT scan is a medical imaging using X-rays. It can see hard tissues (like bon
 ## Reference system in anatomy
 
 - **Sagittal**, from left to right (ear to ear)
-- **Transversal**, from up to down (head to feet)
+- **Axial or Transversal**, from up to down (head to feet)
 - **Coronal** (or frontal), from front to back (nose to back)
 
 ## DICOM (Digital Imaging and Communications in Medicine)

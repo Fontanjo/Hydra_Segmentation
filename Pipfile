@@ -6,10 +6,16 @@ name = "pypi"
 [packages]
 numpy = "*"
 pydicom = "*"
-jupyter = "*"
-notebook = "*"
 ipython = "*"
 matplotlib = "*"
+pandas = "*"
+torch = "*"
+torchvision = "*"
+sklearn = "*"
+brutelogger = "*"
+tensorboard = "*"
+tqdm = "*"
+ipdb = "*"
 
 [dev-packages]
 

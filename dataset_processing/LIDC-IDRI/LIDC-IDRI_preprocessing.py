@@ -38,7 +38,7 @@ def main(dataset_folder, diagnosis_csv, output_folder):
     os.makedirs(f"{output_folder}/{True}", exist_ok=True)
     os.makedirs(f"{output_folder}/{False}", exist_ok=True)
 
-    # Read the diagnosis csv file and store in a DataFrame
+    # Read the diagnosis csv file and store it in a DataFrame
     csv_diagnosis = pd.read_csv(diagnosis_csv, sep=',', usecols=['Patient ID','Diagnosis'])
 
     # Number of nodules (will be incremented at runtime)
@@ -160,7 +160,7 @@ def main(dataset_folder, diagnosis_csv, output_folder):
                 # Iterate over all dicom files
                 for dicom_path in glob.glob(os.path.join(patient_visit_serie_path, "*.dcm")):
                     # Load the file
-                    dcm = pydicom.read_file(dicom_path)
+                    dcm = pydicom.dcmread(dicom_path)
 
                     # Get the z position of this dicom image
                     dcm_z_position = float(dcm[0x20, 0x32].value[2])

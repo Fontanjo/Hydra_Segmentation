@@ -16,6 +16,7 @@ brutelogger = "*"
 tensorboard = "*"
 tqdm = "*"
 ipdb = "*"
+rt-utils = "*"
 
 [dev-packages]
 

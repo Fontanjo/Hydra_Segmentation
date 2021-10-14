@@ -2,6 +2,7 @@
 *.dcm
 *.npy
 *.xml
+/testhydra
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

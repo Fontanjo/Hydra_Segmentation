@@ -17,6 +17,7 @@ tensorboard = "*"
 tqdm = "*"
 ipdb = "*"
 rt-utils = "*"
+openpyxl = "*"
 
 [dev-packages]
 

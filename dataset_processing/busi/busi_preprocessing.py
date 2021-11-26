@@ -2,20 +2,20 @@
 #                                       #
 #  Christophe Broillet                  #
 #  University of Fribourg               #
-#  2021                                 #
+#  2022                                 #
 #  Bachelor's thesis                    #
 #                                       #
 #########################################
 
+
 import numpy as np
-import os
-import glob
 from PIL import Image
 from pathlib import Path
+import re
 
 
 arguments = {
-    'dataset_folder': "/media/christophe/Extreme SSD/CancerDatasets/HealthyCopy/BUSI",
+    'dataset_folder': "dataset_processing/busi/BUSI",
     'output_folder': "dataset_processing/busi/output",
     }
 
@@ -24,8 +24,8 @@ Description: this script takes as input the BUSI dataset path,
 and creates numpy arrays (images and segmentation masks)
 in the given output folder
 Params:
-    dataset_folder   - Required  : folder containing the data set
-    output_folder    - Required  : output folders
+    dataset_folder   - Required  : folder containing the BUSI data set
+    output_folder    - Required  : output folder
 Returns:
     - No return value
 """
@@ -33,82 +33,63 @@ Returns:
 dataset_folder = Path(arguments['dataset_folder'])
 output_folder = Path(arguments['output_folder'])
 
-# Create directories in the output folder
-os.makedirs(Path(f"{output_folder}/img"), exist_ok=True)
-os.makedirs(Path(f"{output_folder}/masks"), exist_ok=True)
+# The slash operator '/' in the pathlib module is similar to os.path.join()
+images_output_path = output_folder / "img"
+masks_output_path = output_folder / "masks"
+Path.mkdir(images_output_path, exist_ok=True)
+Path.mkdir(masks_output_path, exist_ok=True)
 
-# List containing the 3 categories names
-cat_names = os.listdir(dataset_folder)
+# benign, malignant and normal
+categories_names = Path.iterdir(dataset_folder)
 
-# Number of total slices (images + masks)
 ntotal = 0
 
-# Number of images exported
-nimgexported = 0
+for category_path in categories_names:
+    # name returns a string representing the final path component
+    # normal category have no tumors
+    if category_path.name == 'normal':
+        continue
 
-# Number of masks exported
-nmasksexported = 0
+    # glob() matches files with the given pattern
+    # It returns a generator containing the matched paths
+    image_paths_list = category_path.glob("*(*).png")
 
-# Iteration
-for category in cat_names:
-    # Construct the path
-    category_path = Path(os.path.join(dataset_folder, category))
+    # Need to cast to list because generators do not have len()
+    ntotal = ntotal + len(list(Path.iterdir(category_path)))
 
-    # Increment ntotal
-    ntotal = ntotal + len(os.listdir(category_path))
+    for image_path in image_paths_list:
+        image_name = image_path.name
+        match = re.search(r"^([a-z]+) \(([0-9]+)\).png$", image_name)
+        if match:
+            # group(1,2) returns a tuple containing both groups submatches for the regex
+            category, number = match.group(1,2)
 
-    # Create images path and masks path lists
-    images_path_list = glob.glob(os.path.join(category_path, "*).png"))
-    masks_path_list = glob.glob(os.path.join(category_path, "*mask*.png"))
+            # Open, convert and save the image
+            file_name = f"{category}{number}"
+            destination_path = images_output_path / Path(file_name).with_suffix('.npy')
+            image = Image.open(image_path)
+            # L for Luminance, 8-bit pixels, 1 channel
+            image = image.convert('L')
+            np.save(destination_path, image)
 
-    # Iteration over images
-    for image_path in images_path_list:
-        # Load file, using the path of the image, and the Image module
-        image = Image.open(image_path)
-        # Convert the image to 1 channel greyscale image (L for Luminance)
-        image = image.convert('L')
+            # Can have more then 1 mask per image
+            mask_paths = category_path.glob(f"{category} ({number})_mask*.png")
+            for index, mask_path in enumerate(mask_paths):
+                # Open, convert and save the mask
+                mask_name = file_name + f"_mask{index}"
+                mask_destination_path = masks_output_path / Path(mask_name).with_suffix('.npy')
+                mask = Image.open(mask_path)
+                # L for Luminance, 8-bit pixels, 1 channel
+                mask = mask.convert('L')
+                np.save(mask_destination_path, mask)
 
-        # Create destination file name
-        fname = Path(image_path).stem
-        # Create destination path
-        dest = Path(os.path.join(output_folder, "img", f"{fname}.npy"))
-        # Save the numpy array
-        np.save(dest, image)
-
-        # Print progress
-        print('i', end='', flush=True)
-
-        # Increment the number of exported files
-        nimgexported += 1
-
-    # Iteration over masks
-    for mask_path in masks_path_list:
-        # Load file, using the path of the mask, and the Image module
-        image = Image.open(mask_path)
-        # Convert the image to 1 channel greyscale image (L for Luminance)
-        image = image.convert('L')
-
-        # Create destination file name
-        fname = Path(mask_path).stem
-        # Create destination path
-        dest = Path(os.path.join(output_folder, "masks", f"{fname}.npy"))
-        # Save the numpy array
-        np.save(dest, image)
-
-        # Print progress
-        print('m', end='', flush=True)
-
-        # Increment the number of exported files
-        nmasksexported += 1
+            print('.', end='', flush=True)
 
 
 # Sanity checks
-print()
-print(f"Total numbers of slices (ntotal): {ntotal}")
-nimg = len(os.listdir(f"{output_folder}/img"))
-nmasks = len(os.listdir(f"{output_folder}/masks"))
+print(f"\nTotal numbers of slices (ntotal): {ntotal}")
+nimg = len(list(Path.iterdir(images_output_path)))
+nmasks = len(list(Path.iterdir(masks_output_path)))
 print(f"Expected: nimg + nmasks == ntotal")
 print(f"{nimg} + {nmasks} = {nimg + nmasks} (expected {ntotal})")
-if nimg + nmasks != ntotal:
-    print('  ERROR! File numbers do not match!')
-print()
+assert (nimg + nmasks) == ntotal, "File numbers do not match!"

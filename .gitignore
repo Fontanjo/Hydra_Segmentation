@@ -1,4 +1,5 @@
 # Added personnal
+*.png
 *.dcm
 *.npy
 *.xml

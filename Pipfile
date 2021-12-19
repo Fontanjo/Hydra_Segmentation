@@ -18,6 +18,7 @@ tqdm = "*"
 ipdb = "*"
 rt-utils = "*"
 openpyxl = "*"
+opencv-python = "*"
 
 [dev-packages]
 

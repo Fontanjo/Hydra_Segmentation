@@ -95,46 +95,54 @@ def create_segmentation_mask(image, contour_data, output_folder, conversion):
     # Here tolerate 7% errors
     PIXEL_THRESHOLD = ncol * 0.07
     # Iteration taking 3 tuples at a time
-    for boundaries_index, (first, second, third) in enumerate(
+    for boundaries_index, (first_b, second_b, third_b) in enumerate(
         zip(white_boundaries, white_boundaries[1:], white_boundaries[2:])
     ):
-        first_index, first_min, first_max = first
-        second_index, second_min, second_max = second
-        third_index, third_min, third_max = third
 
-        average_min_neighbours = np.mean([first_min, third_min], dtype=np.int32)
-        average_max_neighbours = np.mean([first_max, third_max], dtype=np.int32)
-
-
-
-        # # Check if values of middle row are absurd
-        # this_error = None
-        # if abs(average_min_neighbours - second_min) > PIXEL_THRESHOLD:
-        #     this_error = 'min'
-        # elif abs(average_max_neighbours - second_max) > PIXEL_THRESHOLD:
-        #     this_error = 'max'
-
-        # if this_error:
-            # print(this_error)
-            # white_boundaries[boundaries_index+1][1 if this_error == 'min' else 2] = average_f"{this_error}"_neighbours
-        #     file.write(f"Row {first_index} - {second_index} - {third_index} " +\
-        #     f"have {this_error} absurd value. Before : {first_min} - {second_min} - {third_min}. " +\
-        #     f"After : {first_min} - {average_min_neighbours} - {third_min}\n")
-
-
+        keys = ['index', 'min', 'max']
+        first = dict(zip(keys, first_b))
+        second = dict(zip(keys, second_b))
+        third = dict(zip(keys, third_b))
+        average = {
+            'min': np.mean([first['min'], third['min']], dtype=np.int32),
+            'max': np.mean([first['max'], third['max']], dtype=np.int32),
+        }
 
         # Check if values of middle row are absurd
-        if abs(average_min_neighbours - second_min) > PIXEL_THRESHOLD:
-            white_boundaries[boundaries_index+1][1] = average_min_neighbours
-            file.write(f"Row {first_index} - {second_index} - {third_index} " +\
-            f"have minimum absurd value. Before : {first_min} - {second_min} - {third_min}. " +\
-            f"After : {first_min} - {average_min_neighbours} - {third_min}\n")
+        this_error = None
+        if abs(average['min'] - second['min']) > PIXEL_THRESHOLD:
+            this_error = 'min'
+        elif abs(average['max'] - second['max']) > PIXEL_THRESHOLD:
+            this_error = 'max'
 
-        if abs(average_max_neighbours - second_max) > PIXEL_THRESHOLD:
-            white_boundaries[boundaries_index+1][2] = average_max_neighbours
-            file.write(f"Row {first_index} - {second_index} - {third_index} " +\
-            f"have maximum absurd value. Before : {first_max} - {second_max} - {third_max}. " +\
-            f"After : {first_max} - {average_max_neighbours} - {third_max}\n")
+        if this_error:
+            white_boundaries[boundaries_index+1][1 if this_error == 'min' else 2] = average[this_error]
+            file.write(f"Row {first['index']} - {second['index']} - {third['index']} " +\
+            f"have {this_error} absurd value. " +\
+            f"Before : {first[this_error]} - {second[this_error]} - {third[this_error]}. " +\
+            f"After : {first[this_error]} - {average[this_error]} - {third[this_error]}\n")
+
+
+        # OLD CODE
+        # first_index, first_min, first_max = first_b
+        # second_index, second_min, second_max = second_b
+        # third_index, third_min, third_max = third_b
+
+        # average_min_neighbours = np.mean([first_min, third_min], dtype=np.int32)
+        # average_max_neighbours = np.mean([first_max, third_max], dtype=np.int32)
+
+        # # Check if values of middle row are absurd
+        # if abs(average_min_neighbours - second_min) > PIXEL_THRESHOLD:
+        #     white_boundaries[boundaries_index+1][1] = average_min_neighbours
+        #     file.write(f"Row {first_index} - {second_index} - {third_index} " +\
+        #     f"have minimum absurd value. Before : {first_min} - {second_min} - {third_min}. " +\
+        #     f"After : {first_min} - {average_min_neighbours} - {third_min}\n")
+        #
+        # if abs(average_max_neighbours - second_max) > PIXEL_THRESHOLD:
+        #     white_boundaries[boundaries_index+1][2] = average_max_neighbours
+        #     file.write(f"Row {first_index} - {second_index} - {third_index} " +\
+        #     f"have maximum absurd value. Before : {first_max} - {second_max} - {third_max}. " +\
+        #     f"After : {first_max} - {average_max_neighbours} - {third_max}\n")
 
     # Fill the mask
     for row_index, min_white, max_white in white_boundaries:

@@ -3,7 +3,9 @@
 *.dcm
 *.npy
 *.xml
-/testhydra
+/private
+Pipfile
+Pipfile.lock
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

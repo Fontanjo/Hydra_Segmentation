@@ -135,13 +135,6 @@ for nrow, row_data in RT_df.iterrows():
     # Gather data
     patient_id, RT_series_UID, _modality, associated_series_UID, RT_path, ROI_name = row_data
 
-    # strip() removes the spaces at the beginning and the end of the string
-    # patient_id = row_data['Patient ID'].strip()
-    # RT_series_UID = row_data['Series UID'].strip()
-    # associated_series_UID = row_data['Associated series UID'].strip()
-    # RT_path = row_data['Path']
-    # ROI_name = row_data['Roi name'].strip()
-
     # Dicom tags for further use
     STRUCTURE_SET_ROI = (0x3006,0x20)
     ROI_NUMBER = (0x3006,0x22)

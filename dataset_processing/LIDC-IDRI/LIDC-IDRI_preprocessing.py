@@ -204,8 +204,6 @@ for patient_path in Path.iterdir(dataset_folder):
             print("\nSearching slices:\n", flush=True)
 
             # Iteration over the nodules dataframe
-            # TODO: check instead of iterrows that returns a dict
-            # TODO: better way than the index?
             for row_number, nodule_info in nodules_df.iterrows():
                 # Extract the infos for this row
                 if task == 'localization':
@@ -238,12 +236,13 @@ for patient_path in Path.iterdir(dataset_folder):
                             dest_path_img = localization_path / diag / dest_fname_img
                         elif task == 'segmentation':
                             dest_fname_img = f"{patient_path.name}_nid-{nid}_pos-{pos_z}_{row_number}"
-                            dest_path_img = img_output_path / (dest_fname_img + '.npy')
+                            dest_path_img = img_output_path / dest_fname_img
                             # Save also mask for segmentation
-                            dest_fname_mask = dest_fname_img + '_mask.npy'
+                            dest_fname_mask = dest_fname_img + '_mask'
                             dest_path_mask = mask_output_path / dest_fname_mask
                             # Contour points already converted, no conversion needed
                             mask_array = segmentation_mask.create_segmentation_mask(dcm, contour_data, output_folder, conversion=False)
+                            # save() automatically appends .npy extension
                             np.save(dest_path_mask, mask_array)
                         else:
                             assert False, "Task misspelled"

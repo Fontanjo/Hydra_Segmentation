@@ -28,7 +28,6 @@ def get_LUT_value(numpyArray, windowWidth, windowCenter, rescaleSlope, rescaleIn
     if rescaleSlope != None and rescaleIntercept != None:
         numpyArray = numpyArray * rescaleSlope + rescaleIntercept
 
-
     if isinstance(windowCenter, pydicom.multival.MultiValue):
         windowCenter = windowCenter[0]
 
@@ -61,11 +60,12 @@ def get_normalized_array(dataset, flip=False):
 
     # WindowWidth and WindowCenter are available in dataset
     if ('WindowWidth' in dataset) and ('WindowCenter' in dataset):
-        if ('RescaleSlope' not in dataset) or ('RescaleIntercept' not in dataset):
-            image_array = get_LUT_value(dataset.pixel_array, dataset.WindowWidth, dataset.WindowCenter, None, None)
+        if ('RescaleSlope' in dataset) and ('WindowCenter' in dataset):
+            image_array = get_LUT_value(dataset.pixel_array, dataset.WindowWidth, dataset.WindowCenter,
+            dataset.RescaleSlope, dataset.RescaleIntercept)
         else:
             image_array = get_LUT_value(dataset.pixel_array, dataset.WindowWidth, dataset.WindowCenter,
-            dataset.RescaleSlope,dataset.RescaleIntercept)
+            None, None)
 
         if flip:
             image_array = 255 - image
@@ -74,7 +74,6 @@ def get_normalized_array(dataset, flip=False):
         return image_array
 
     # dataset without windowWidth/WindowCenter -> unable to compute the linear transformation
-    # if ('WindowWidth' not in dataset) or ('WindowCenter' not in dataset):
     else:
         # number of bits allocated for each pixel (each sample/channel should have the same number of bits allocated)
         # either 1 or a multiple of 8

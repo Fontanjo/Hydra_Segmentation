@@ -18,8 +18,7 @@ from pathlib import Path
 
 
 arguments = {
-    'dataset_folder': "dataset_processing/LIDC-IDRI/test",
-    # 'dataset_folder': "/media/christophe/Extreme SSD/CancerDatasets/HealthyCopy/LIDC-IDRI/LIDC-IDRI",
+    'dataset_folder': "dataset_processing/LIDC-IDRI/data",
     'output_folder': "dataset_processing/LIDC-IDRI/output",
     }
 
@@ -123,7 +122,7 @@ for patient_path in Path.iterdir(dataset_folder):
 
                     if task == 'localization':
                         # Initialization
-                        # then set the diagnosis depending on the malignancy
+                        # Then set the diagnosis depending on the malignancy
                         diagnosis = ''
                         if malignancy in ['1','2']:
                             diagnosis = 'False'

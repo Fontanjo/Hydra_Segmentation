@@ -20,7 +20,7 @@ def create_segmentation_mask(image, contour_data, output_folder, conversion):
         image          - Required : image (Pydicom) corresponding to one specific slice
         contour_data   - Required : 2D array containing contours points of the segmentation
         output_folder  - Required : Path to the output folder that will contain the log files
-        conversion     - Required : Boolean that indicates if we want conversion or not
+        conversion     - Required : Boolean that indicates if conversion from mm to image coordinates is needed
     """
     # Create and open a log text file
     # The slash operator '/' in the pathlib module is similar to os.path.join()
@@ -122,27 +122,6 @@ def create_segmentation_mask(image, contour_data, output_folder, conversion):
             f"Before : {first[this_error]} - {second[this_error]} - {third[this_error]}. " +\
             f"After : {first[this_error]} - {average[this_error]} - {third[this_error]}\n")
 
-
-        # OLD CODE
-        # first_index, first_min, first_max = first_b
-        # second_index, second_min, second_max = second_b
-        # third_index, third_min, third_max = third_b
-
-        # average_min_neighbours = np.mean([first_min, third_min], dtype=np.int32)
-        # average_max_neighbours = np.mean([first_max, third_max], dtype=np.int32)
-
-        # # Check if values of middle row are absurd
-        # if abs(average_min_neighbours - second_min) > PIXEL_THRESHOLD:
-        #     white_boundaries[boundaries_index+1][1] = average_min_neighbours
-        #     file.write(f"Row {first_index} - {second_index} - {third_index} " +\
-        #     f"have minimum absurd value. Before : {first_min} - {second_min} - {third_min}. " +\
-        #     f"After : {first_min} - {average_min_neighbours} - {third_min}\n")
-        #
-        # if abs(average_max_neighbours - second_max) > PIXEL_THRESHOLD:
-        #     white_boundaries[boundaries_index+1][2] = average_max_neighbours
-        #     file.write(f"Row {first_index} - {second_index} - {third_index} " +\
-        #     f"have maximum absurd value. Before : {first_max} - {second_max} - {third_max}. " +\
-        #     f"After : {first_max} - {average_max_neighbours} - {third_max}\n")
 
     # Fill the mask
     for row_index, min_white, max_white in white_boundaries:

@@ -4,8 +4,6 @@
 *.npy
 *.xml
 /private
-Pipfile
-Pipfile.lock
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

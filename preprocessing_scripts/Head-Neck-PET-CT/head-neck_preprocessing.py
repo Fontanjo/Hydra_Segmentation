@@ -7,6 +7,7 @@
 #                                       #
 #########################################
 
+
 import pydicom
 import numpy as np
 import normalize_dicom
@@ -14,8 +15,9 @@ import segmentation_mask
 import pandas as pd
 from pathlib import Path
 
+
 arguments = {
-    'dataset_folder': "dataset_processing/headneck/test",
+    'dataset_folder': "dataset_processing/headneck/data",
     'roinames_excel': "dataset_processing/headneck/INFO_GTVcontours_HN.xlsx",
     'output_folder': "dataset_processing/headneck/output",
     }

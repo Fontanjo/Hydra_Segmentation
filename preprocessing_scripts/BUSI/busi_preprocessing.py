@@ -15,7 +15,7 @@ import re
 
 
 arguments = {
-    'dataset_folder': "dataset_processing/busi/BUSI",
+    'dataset_folder': "dataset_processing/busi/data",
     'output_folder': "dataset_processing/busi/output",
     }
 

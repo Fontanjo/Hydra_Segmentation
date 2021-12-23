@@ -3,7 +3,7 @@
 #  Christophe Broillet                  #
 #  University of Fribourg               #
 #  2022                                 #
-#  Bachelor's thesis                    #
+#  Bachelor thesis                      #
 #                                       #
 #########################################
 
@@ -21,6 +21,7 @@ arguments = {
     'dataset_folder': "dataset_processing/LIDC-IDRI/data",
     'output_folder': "dataset_processing/LIDC-IDRI/output",
     }
+
 
 """
 Description: this script takes as input the LIDC-IDRI dataset path,

@@ -49,6 +49,8 @@ def get_LUT_value(numpyArray, windowWidth, windowCenter, rescaleSlope, rescaleIn
     return (numpyArray/ ratio).astype('uint8')
 
 
+
+
 def get_normalized_array(dataset, flip=False):
     """Get normalized NumPy array from DICOM file
     @params:

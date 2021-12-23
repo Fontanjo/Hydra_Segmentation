@@ -3,7 +3,7 @@
 #  Christophe Broillet                  #
 #  University of Fribourg               #
 #  2022                                 #
-#  Bachelor's thesis                    #
+#  Bachelor thesis                      #
 #                                       #
 #########################################
 
@@ -12,6 +12,40 @@ import pydicom
 import numpy as np
 import pandas as pd
 from pathlib import Path
+
+
+def mm_to_imagecoordinates(image, point):
+    """Convert the given point location in mm to corresponding row and column indices
+    @params:
+        image    - Required : image (Pydicom) corresponding to one specific slice
+        point    - Required : 1D array containing the x and y coordinates (in mm) of the point
+    """
+    # This function uses the equation given in the DICOM browser documentation
+    # to convert from millimeters to indices (image coordinates).
+    # Source : https://dicom.innolitics.com/ciods/ct-image/image-plane/00200032
+
+    # The two equations to solve for i and j are the following :
+    # (Xx * Di)*i (Yx * Dj)*j = Px - Sx
+    # (Xy * Di)*i (Yy * Dj)*j = Py - Sy
+
+    # All these variables are extracted from following DICOM tags
+    IMAGE_POSITION = (0x20,0x32)
+    PIXEL_SPACING = (0x28,0x30)
+    IMAGE_ORIENTATION = (0x20,0x37)
+
+    Sx, Sy, _Sz = image[IMAGE_POSITION].value
+    Di, Dj = image[PIXEL_SPACING].value
+    Xx, Xy, _Xz, Yx, Yy, _Yz = image[IMAGE_ORIENTATION].value
+    Px, Py = point
+
+    # Equations in matrix form ax = b
+    a = np.array([[Xx * Di, Yx * Dj], [Xy * Di, Yy * Dj]])
+    b = np.array([Px - Sx, Py - Sy])
+
+    i, j = np.linalg.solve(a, b)
+
+    return [round(i), round(j)]
+
 
 
 def create_segmentation_mask(image, contour_data, output_folder, conversion):
@@ -91,7 +125,7 @@ def create_segmentation_mask(image, contour_data, output_folder, conversion):
 
 
     # 2) Check for absurd values, and correct them
-    # Threshold that tells when a value should be considered as an error
+    # Arbitrarily threshold that tells when a value should be considered as an error
     # Here tolerate 7% errors
     PIXEL_THRESHOLD = ncol * 0.07
     # Iteration taking 3 tuples at a time
@@ -134,36 +168,3 @@ def create_segmentation_mask(image, contour_data, output_folder, conversion):
         Path.unlink(file_path)
 
     return seg_mask
-
-
-def mm_to_imagecoordinates(image, point):
-    """Convert the given point location in mm to corresponding row and column indices
-    @params:
-        image    - Required : image (Pydicom) corresponding to one specific slice
-        point    - Required : 1D array containing the x and y coordinates (in mm) of the point
-    """
-    # This function uses the equation given in the DICOM browser documentation
-    # to convert from millimeters to indices (image coordinates).
-    # Source : https://dicom.innolitics.com/ciods/ct-image/image-plane/00200032
-
-    # The two equations to solve for i and j are the following :
-    # (Xx * Di)*i (Yx * Dj)*j = Px - Sx
-    # (Xy * Di)*i (Yy * Dj)*j = Py - Sy
-
-    # All these variables are extracted from following DICOM tags
-    IMAGE_POSITION = (0x20,0x32)
-    PIXEL_SPACING = (0x28,0x30)
-    IMAGE_ORIENTATION = (0x20,0x37)
-
-    Sx, Sy, _Sz = image[IMAGE_POSITION].value
-    Di, Dj = image[PIXEL_SPACING].value
-    Xx, Xy, _Xz, Yx, Yy, _Yz = image[IMAGE_ORIENTATION].value
-    Px, Py = point
-
-    # Equations in matrix form ax = b
-    a = np.array([[Xx * Di, Yx * Dj], [Xy * Di, Yy * Dj]])
-    b = np.array([Px - Sx, Py - Sy])
-
-    i, j = np.linalg.solve(a, b)
-
-    return [round(i), round(j)]

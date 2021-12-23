@@ -3,7 +3,7 @@
 #  Christophe Broillet                  #
 #  University of Fribourg               #
 #  2022                                 #
-#  Bachelor's thesis                    #
+#  Bachelor thesis                      #
 #                                       #
 #########################################
 
@@ -21,6 +21,7 @@ arguments = {
     'roinames_excel': "dataset_processing/headneck/INFO_GTVcontours_HN.xlsx",
     'output_folder': "dataset_processing/headneck/output",
     }
+
 
 """
 Description: this script takes as input the Head-Neck-PET-CT dataset path,
@@ -125,7 +126,6 @@ for patient_path in Path.iterdir(dataset_folder):
 
 
 print("\nCreating images and masks...\n", flush=True)
-
 
 # RTStruct, images (CT + PET) separated in two dataframes
 RT_df = metadata_df[metadata_df['Modality'] == 'RTSTRUCT']

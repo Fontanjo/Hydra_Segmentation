@@ -3,7 +3,7 @@
 #  Christophe Broillet                  #
 #  University of Fribourg               #
 #  2022                                 #
-#  Bachelor's thesis                    #
+#  Bachelor thesis                      #
 #                                       #
 #########################################
 
@@ -19,12 +19,13 @@ arguments = {
     'output_folder': "dataset_processing/busi/output",
     }
 
+
 """
 Description: this script takes as input the BUSI dataset path,
 and creates numpy arrays (images and segmentation masks)
 in the given output folder
 Params:
-    dataset_folder   - Required  : folder containing the BUSI data set
+    dataset_folder   - Required  : folder containing the BUSI dataset
     output_folder    - Required  : output folder
 Returns:
     - No return value
@@ -68,7 +69,7 @@ for category_path in categories_names:
             file_name = f"{category}{number}"
             destination_path = images_output_path / Path(file_name).with_suffix('.npy')
             image = Image.open(image_path)
-            # L for Luminance, 8-bit pixels, 1 channel
+            # L for Luminance, 8-bits pixels, 1-channel
             image = image.convert('L')
             np.save(destination_path, image)
 
@@ -79,7 +80,7 @@ for category_path in categories_names:
                 mask_name = file_name + f"_mask{index}"
                 mask_destination_path = masks_output_path / Path(mask_name).with_suffix('.npy')
                 mask = Image.open(mask_path)
-                # L for Luminance, 8-bit pixels, 1 channel
+                # L for Luminance, 8-bits pixels, 1-channel
                 mask = mask.convert('L')
                 np.save(mask_destination_path, mask)
 

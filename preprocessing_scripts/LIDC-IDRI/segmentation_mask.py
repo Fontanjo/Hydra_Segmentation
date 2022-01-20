@@ -1,13 +1,3 @@
-#########################################
-#                                       #
-#  Christophe Broillet                  #
-#  University of Fribourg               #
-#  2022                                 #
-#  Bachelor thesis                      #
-#                                       #
-#########################################
-
-
 import pydicom
 import numpy as np
 import pandas as pd
@@ -80,8 +70,8 @@ def create_segmentation_mask(image, contour_data, output_folder, conversion):
             x, y = mm_to_imagecoordinates(image, point)
         else:
             x, y = point
-        # White pixel is of value 255
-        seg_mask[y][x] = 255
+        # White pixel is of value 1
+        seg_mask[y][x] = 1
 
 
     # -- DATA MITIGATION AND IMPUTATION in two parts --
@@ -91,7 +81,7 @@ def create_segmentation_mask(image, contour_data, output_folder, conversion):
     # Will contain lists [row mask index, min white column index, max white column index]
     white_boundaries = []
     # Source : https://stackoverflow.com/questions/34126230/getting-indices-of-a-specific-value-in-numpy-array
-    white_indices = lambda row : np.argwhere(row == 255).flatten()
+    white_indices = lambda row : np.argwhere(row == 1).flatten()
     min_mask = lambda row : np.min(white_indices(row))
     max_mask = lambda row : np.max(white_indices(row))
 
@@ -117,7 +107,7 @@ def create_segmentation_mask(image, contour_data, output_folder, conversion):
             average_max = np.mean([first_max, second_max], dtype=np.int32)
             # Complete missing lines
             for i in range(first_index + 1, second_index):
-                file.write(f"Row {i} missing\n")
+                file.write(f"Row {i} is missing\n")
                 white_boundaries.append([i, average_min, average_max])
 
     # To ensure the right order
@@ -126,8 +116,8 @@ def create_segmentation_mask(image, contour_data, output_folder, conversion):
 
     # 2) Check for absurd values, and correct them
     # Arbitrarily threshold that tells when a value should be considered as an error
-    # Here tolerate 7% errors
-    PIXEL_THRESHOLD = ncol * 0.07
+    # Here tolerate 5% errors
+    ERROR_THRESHOLD = 0.05
     # Iteration taking 3 tuples at a time
     for boundaries_index, (first_b, second_b, third_b) in enumerate(
         zip(white_boundaries, white_boundaries[1:], white_boundaries[2:])
@@ -144,22 +134,22 @@ def create_segmentation_mask(image, contour_data, output_folder, conversion):
 
         # Check if values of middle row are absurd
         this_error = None
-        if abs(average['min'] - second['min']) > PIXEL_THRESHOLD:
+        if abs((average['min'] - second['min']) / average['min']) > ERROR_THRESHOLD:
             this_error = 'min'
-        elif abs(average['max'] - second['max']) > PIXEL_THRESHOLD:
+        elif abs((average['max'] - second['max']) / average['max']) > ERROR_THRESHOLD:
             this_error = 'max'
 
         if this_error:
             white_boundaries[boundaries_index+1][1 if this_error == 'min' else 2] = average[this_error]
-            file.write(f"Row {first['index']} - {second['index']} - {third['index']} " +\
+            file.write(f"Rows {first['index']} - {second['index']} - {third['index']} " +\
             f"have {this_error} absurd value. " +\
-            f"Before : {first[this_error]} - {second[this_error]} - {third[this_error]}. " +\
-            f"After : {first[this_error]} - {average[this_error]} - {third[this_error]}\n")
+            f"Before: {first[this_error]} - {second[this_error]} - {third[this_error]}. " +\
+            f"After: {first[this_error]} - {average[this_error]} - {third[this_error]}\n")
 
 
     # Fill the mask
     for row_index, min_white, max_white in white_boundaries:
-        seg_mask[row_index, min_white:max_white+1] = 255
+        seg_mask[row_index, min_white:max_white+1] = 1
 
     file.close()
     # Similar to os.stat()

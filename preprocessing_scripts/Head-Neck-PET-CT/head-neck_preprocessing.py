@@ -1,13 +1,3 @@
-#########################################
-#                                       #
-#  Christophe Broillet                  #
-#  University of Fribourg               #
-#  2022                                 #
-#  Bachelor thesis                      #
-#                                       #
-#########################################
-
-
 import pydicom
 import numpy as np
 import normalize_dicom
@@ -17,9 +7,9 @@ from pathlib import Path
 
 
 arguments = {
-    'dataset_folder': "dataset_processing/headneck/data",
-    'roinames_excel': "dataset_processing/headneck/INFO_GTVcontours_HN.xlsx",
-    'output_folder': "dataset_processing/headneck/output",
+    'dataset_folder': "preprocessing_scripts/Head-Neck-PET-CT/data",
+    'roinames_excel': "preprocessing_scripts/Head-Neck-PET-CT/INFO_GTVcontours_HN.xlsx",
+    'output_folder': "preprocessing_scripts/Head-Neck-PET-CT/output",
     }
 
 

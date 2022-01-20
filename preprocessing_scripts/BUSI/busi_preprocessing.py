@@ -1,13 +1,3 @@
-#########################################
-#                                       #
-#  Christophe Broillet                  #
-#  University of Fribourg               #
-#  2022                                 #
-#  Bachelor thesis                      #
-#                                       #
-#########################################
-
-
 import numpy as np
 from PIL import Image
 from pathlib import Path

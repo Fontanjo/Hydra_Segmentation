@@ -1,13 +1,3 @@
-#########################################
-#                                       #
-#  Christophe Broillet                  #
-#  University of Fribourg               #
-#  2022                                 #
-#  Bachelor thesis                      #
-#                                       #
-#########################################
-
-
 import pydicom
 import numpy as np
 import normalize_dicom
@@ -18,8 +8,8 @@ from pathlib import Path
 
 
 arguments = {
-    'dataset_folder': "dataset_processing/LIDC-IDRI/data",
-    'output_folder': "dataset_processing/LIDC-IDRI/output",
+    'dataset_folder': "preprocessing_scripts/LIDC-IDRI/data",
+    'output_folder': "preprocessing_scripts/LIDC-IDRI/output",
     }
 
 

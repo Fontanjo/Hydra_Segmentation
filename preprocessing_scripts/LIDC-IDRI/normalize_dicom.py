@@ -44,9 +44,12 @@ def get_LUT_value(numpyArray, windowWidth, windowCenter, rescaleSlope, rescaleIn
     [numpyArray<= windowCenter-0.5-(windowWidth-1)/2, numpyArray>windowCenter - 0.5 + (windowWidth-1) /2],
     [0, 255, lambda x: ((x - (windowCenter - 0.5)) / (windowWidth-1) + 0.5) * (255 - 0) + 0 ])
 
+    return numpyArray.astype('uint8')
+
+    # BEFORE:
     # conversion 16 bits to 8 bits array: [0:MAXARRAY] -> [0:255]
-    ratio = np.max(numpyArray) / 255 ;
-    return (numpyArray/ ratio).astype('uint8')
+    # ratio = np.max(numpyArray) / 255 ;
+    # return (numpyArray/ ratio).astype('uint8')
 
 
 

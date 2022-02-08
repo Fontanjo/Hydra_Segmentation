@@ -23,9 +23,9 @@ Returns:
     - No return value
 """
 # Ask the user which task he wants
-task = input("\n Please enter task. Localization (l) or segmentation (s)?")
+task = input("\n Please enter task. Localization (l) or segmentation (s)? ")
 while task not in ['l', 's']:
-    task = input("\n Please enter a valid task. Localization (l) or segmentation (s)?")
+    task = input("\n Please enter a valid task. Localization (l) or segmentation (s)? ")
 if task == 'l': task = 'localization'
 elif task == 's': task = 'segmentation'
 print(f"\n Starting {task} task:")

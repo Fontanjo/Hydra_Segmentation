@@ -1,4 +1,4 @@
-# Pre-Processing Segmentation Datasets For The Hydra Framework
+# Pre-Processing Segmentation Datasets for the Hydra Framework
 
 Author: Christophe Broillet
 
@@ -10,4 +10,4 @@ The folder *preprocessing_scripts* contains the preprocessing scripts for three 
 
 The *Pipfile* and *Pipfile.lock* are here to install a virtual environment on a new machine that wants to run these scripts.
 
-The original publication of this work is available here or in the attached *2022_BSc_Christophe_Broillet.pdf* file.
+The original publication of this work is available [here](https://exascale.info/assets/pdf/students/2022_BSc_Christophe_Broillet.pdf) or in this [repository](https://github.com/ChristopheBroillet/bachelor_thesis).

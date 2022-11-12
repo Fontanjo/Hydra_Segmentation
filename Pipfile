@@ -19,6 +19,7 @@ ipdb = "*"
 rt-utils = "*"
 openpyxl = "*"
 opencv-python = "*"
+nibabel = "*"
 
 [dev-packages]
 

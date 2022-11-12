@@ -7,10 +7,15 @@ from pathlib import Path
 
 
 arguments = {
-    'dataset_folder': "preprocessing_scripts/Head-Neck-PET-CT/data",
-    'roinames_excel': "preprocessing_scripts/Head-Neck-PET-CT/INFO_GTVcontours_HN.xlsx",
-    'output_folder': "preprocessing_scripts/Head-Neck-PET-CT/output",
+    'dataset_folder': "/media/jonas/Seagate Expansion Drive/Memoria/master_thesis/DSetsCristophe/HealthyCopy/Head-Neck-PET-CT/Head-Neck-PET-CT",
+    'roinames_excel': "/media/jonas/Seagate Expansion Drive/Memoria/master_thesis/DSetsCristophe/HealthyCopy/Head-Neck-PET-CT/INFO_GTVcontours_HN.xlsx",
+    'output_folder': "/media/jonas/Seagate Expansion Drive/Memoria/master_thesis/Dataset_HNPC_output",
     }
+# arguments = {
+#     'dataset_folder': "preprocessing_scripts/Head-Neck-PET-CT/data",
+#     'roinames_excel': "preprocessing_scripts/Head-Neck-PET-CT/INFO_GTVcontours_HN.xlsx",
+#     'output_folder': "preprocessing_scripts/Head-Neck-PET-CT/output",
+#     }
 
 
 """
